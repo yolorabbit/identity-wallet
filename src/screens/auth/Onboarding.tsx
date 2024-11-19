@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ScrollView, Image } from 'react-native';
 import CommonScreen from '../../components/template/CommonScreen';
 import { ICONS, IMAGES, THEME } from '../../constants';
 import { CommonBtn, CustomText } from '../../components/common';
@@ -66,8 +66,7 @@ const Onboarding = ({ navigation }: any): React.JSX.Element => {
   return (
     <CommonScreen styles={[styles.bodyContainer]}>
       <View style={styles.container}>
-        <View style={styles.bgContainer}>
-          <View style={styles.carouselContainer}>
+      <View style={styles.carouselContainer}>
             {/* <Carousel
               loop
               width={width}
@@ -78,9 +77,10 @@ const Onboarding = ({ navigation }: any): React.JSX.Element => {
               onSnapToItem={(index) => setCurrentIndex(index)}
               renderItem={({ index }) => renderItem(index)}
             /> */}
-            <CustomImage source={IMAGES.intro} width={400} height={300}></CustomImage>
+            <CustomImage source={IMAGES.intro} width={width} ></CustomImage>
           </View>
           <View style={styles.bottom}>
+          <View style={styles.bottomContainer}>
             <View style={styles.bottomHeader}>
               <CustomText
                 title={title}
@@ -125,7 +125,7 @@ const Onboarding = ({ navigation }: any): React.JSX.Element => {
               />
             </View>
           </View>
-        </View>
+          </View>
       </View>
     </CommonScreen>
   )
@@ -136,60 +136,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-  },
-  bgContainer: {
-    width: '100%',
-    height: '100%',
     backgroundColor: '#EAEDF3',
     position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  carouselIcons: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: 72,
-    height: 12,
-    marginTop: 8,
-    justifyContent: 'space-between',
   },
   carouselContainer: {
     marginTop: 30,
-    width: '90%',
-    height: '75%',
+    // width: '90%',
+    // height: '75%',
+    flex: 5,
     paddingLeft: 30,
     paddingRight: 30,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 24
   },
   carouselItem: {
     width: '100%',
     height: '100%'
   },
-  introImage: {
-    width: '100%',
-    height: 400
-  },
   container: {
     display: 'flex',
     width: '100%',
-    height: '100%',
-    position: 'relative',
-  },
-  header: {
-    width: '100%',
-    height: '100%',
-  },
-  bgStyle: {
     flex: 1,
-    justifyContent: 'flex-end',
+    flexDirection: 'column',
   },
   bottom: {
+    bottom: 0,
+    width: '100%',
+    flex: 3,
+  },
+  bottomContainer: {
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: '33%',
     backgroundColor: THEME.COLORS.backgroundPrimary,
     display: 'flex',
     alignItems: 'center',
@@ -220,6 +200,14 @@ const styles = StyleSheet.create({
   },
   customText: {
     textAlign: 'center',
+  },
+  carouselIcons: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: 72,
+    height: 12,
+    marginTop: 8,
+    justifyContent: 'space-between',
   },
 });
 

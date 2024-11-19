@@ -5,15 +5,15 @@
     "kind": "Directory"
   },
   "applicationId": "com.uiwallet",
-  "variantName": "debug",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0.0",
-      "outputFile": "app-debug.apk"
+      "versionCode": 4,
+      "versionName": "1.0.4",
+      "outputFile": "app-release.apk"
     }
   ],
   "elementType": "File"

@@ -26,12 +26,13 @@ const Checkbox = ({ checked, onPress }: any) => {
 };
 
 
-const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
+const Signup: FC<any> = ({ navigation }): React.JSX.Element => {
   const { user } = userAppData() as { user: IUser };
   const [userinfo, setUserInfo] = useState<TYPES.ISignUp>({} as TYPES.ISignUp);
   const [errors, setErrors] = useState<TYPES.ISignUp>({} as TYPES.ISignUp);
   const [newsletterChecked, setNewsletterChecked] = useState(false);
   const [termsChecked, setTermsChecked] = useState(false);
+  const [showMobilePhone, setShowMobilePhone ] = useState(false);
 
   const handleChangeInfo = (field: string, value: string) => {
     setUserInfo(v => ({ ...v, [field]: value }));
@@ -60,7 +61,7 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
         break;
       case 'mobileNumber':
         if (!validateMobilePhoneNumber(value)) {
-          setErrors((info: any) => ({ ...info, mobileNumber: "Mobile Phone Number must be 12 characters" }))
+          setErrors((info: any) => ({ ...info, mobileNumber: "Mobile Phone Number must contain at least 8 digits" }))
         } else {
           setErrors((info: any) => ({ ...info, mobileNumber: "" }))
         }
@@ -75,16 +76,25 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
     user.email = userinfo.email;
     user.first_name = userinfo.firstName;
     user.last_name = userinfo.lastName;
-    user.phone_number = userinfo.mobileNumber;
+    user.phone_number = showMobilePhone ? userinfo.mobileNumber : "";
     navigation.navigate("CreatePassword");
   };
 
   useEffect(() => {
   }, [])
 
-  const toggleCheckboxNewsletter = () =>
-    setNewsletterChecked(!newsletterChecked);
+  const toggleCheckboxNewsletter = () => setNewsletterChecked(!newsletterChecked);
   const toggleCheckboxTerms = () => setTermsChecked(!termsChecked);
+  const toggleCheckboxShowPhone = () => setShowMobilePhone(!showMobilePhone);
+
+
+  const handleGotoTermCondition = () => {
+    navigation.navigate('Home', { screen: 'TermCondition' });
+  }
+
+  const handleGotoPrivacyPolicy = () => {
+    navigation.navigate('Home', { screen: 'PrivacyPolicy' });
+  }
 
   return (
     <CommonScreen styles={[styles.signupContainer]}>
@@ -181,8 +191,22 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
                   </View>
                 </View>
 
+                <View style={styles.checkboxContainer}>
+                    <Checkbox
+                      checked={showMobilePhone}
+                      onPress={toggleCheckboxShowPhone}
+                    />
+                    <CustomText
+                      title='Add mobile number'
+                      size='bodySmall'
+                      weight='normal'
+                      color='textSecondary'
+                      classes={[{ marginLeft: 8 }]}
+                    />
+                </View>
+                
                 {/* Mobile Number */}
-                <View style={styles.inputContainer}>
+                { showMobilePhone && <View style={styles.inputContainer}>
                   <Text style={styles.label}>Mobile number</Text>
                   <View style={styles.inputItem}>
                     <CommonInput
@@ -202,6 +226,8 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
                     }
                   </View>
                 </View>
+                }
+                
                 <View style={styles.checkboxGroup}>
                   {/* Checkbox 1 */}
                   <View style={styles.checkboxContainer}>
@@ -214,7 +240,7 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
                       size='bodySmall'
                       weight='normal'
                       color='textSecondary'
-                      classes={[{ marginLeft: 8, marginBottom: 16 }]}
+                      classes={[{ marginLeft: 8 }]}
                     />
                   </View>
 
@@ -226,11 +252,11 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
                     />
                     <Text style={styles.checkboxText}>
                       I agree to the{' '}
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={() => handleGotoPrivacyPolicy()}>
                         <Text style={styles.loginTxt}>Terms & Conditions</Text>
                       </TouchableOpacity>{' '}
                       and{' '}
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={() => handleGotoPrivacyPolicy()}>
                         <Text style={styles.loginTxt}>Privacy Policy</Text>
                       </TouchableOpacity>
                     </Text>
@@ -238,13 +264,13 @@ const Signup: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element => {
                 </View>
                 <CommonBtn
                   title='Continue'
-                  kind='primary'
+                  kind= 'primary'
                   onPress={() => handleContinue()}
                 />
                 {/* Create Account Text */}
                 <View style={styles.bottomContainer}>
                   <CustomText
-                    title='Already have an acoount?'
+                    title='Already have an account?'
                     size='body'
                     weight='normal'
                     color='textSecondary'
@@ -314,7 +340,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'column',
-    marginBottom: 24,
+    marginBottom: 23,
   },
   label: {
     color: '#1B1B1B',
@@ -369,7 +395,6 @@ const styles = StyleSheet.create({
     marginTop: 28,
     flexDirection: 'row',
     justifyContent: 'center',
-    // alignItems: 'center',
   },
   loginTxt: {
     color: THEME.COLORS.activeElements,
@@ -394,6 +419,8 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    height: 60,
   },
   checkbox: {
     width: 24,

@@ -7,22 +7,30 @@ type Props = {
   source: any;
   tintColor?: string;
   classes?: any[];
+  resizeMode?: any;
 }
 
 const CustomImage: FC<Props> = (props) => {
   const {
     width = 24,
-    height = 24,
+    height = undefined,
     source,
     tintColor = '',
-    classes = []
+    classes = [],
+    resizeMode = "contain",
   } = props;
+
+  const imageStyle = height
+    ? { width, height } 
+    : { width }; 
+
   return (
     <Image
       tintColor={tintColor}
       source={source}
+      resizeMode= {resizeMode} 
       style={[
-        { width, height },
+        imageStyle,
         ...classes,
       ]}
     />

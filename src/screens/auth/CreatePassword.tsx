@@ -6,7 +6,7 @@ import CommonHeader from '../../components/Headers/CommonHeader';
 import { CommonBtn, CommonInput, CustomModal, CustomText } from '../../components/common';
 import { ICONS, THEME } from '../../constants';
 import { TYPES } from '../../types';
-import { validateEightNumber } from '../../utils/authValidation';
+import { validateEightNumber, validatePassword } from '../../utils/authValidation';
 import CustomImage from '../../components/common/CustomImage';
 import { IUser } from '../../types/type';
 import userAppData from '../../hooks/userAppData';
@@ -177,7 +177,7 @@ const CreatePassword: FC<AuthScreenProps> = ({ navigation }): React.JSX.Element 
                 />
                 <CommonBtn
                   title='Signup'
-                  kind='primary'
+                  kind= 'primary'
                   onPress={() => handleNext()}
                 />
               </View>

@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import CustomText from './CustomText';
 import { THEME } from '../../constants';
 
 type Props = {
   title?: string;
   active?: boolean;
+  isLoading?: boolean;
   color?: 'textPrimary' | 'textSecondary' | 'textTertiary' | 'primaryBtnText' | 'secondaryBtnText' | 'activeElements' | 'disabledColor';
   kind: 'primary' | 'secondary' | 'tertiary' | 'primaryOffWhite' | 'disabled',
   disabled?: boolean;
@@ -21,6 +22,7 @@ const CommonBtn: FC<Props> = (props) => {
   const {
     title,
     active = false,
+    isLoading = false,
     prefix,
     suffix,
     disabled = false,
@@ -75,6 +77,7 @@ const CommonBtn: FC<Props> = (props) => {
     >
       <View style={styles.btnWrapper}>
         {prefix && <Image source={prefix} style={{ width: 24, height: 24 }} />}
+        {isLoading ? <ActivityIndicator size="small" color="#fff" /> :
         <CustomText
           color={color}
           size={fontSize}
@@ -82,6 +85,7 @@ const CommonBtn: FC<Props> = (props) => {
           title={title}
           classes={[{ marginLeft: 8, marginRight: 8 }]}
         />
+        }
         {suffix && <Image source={suffix} style={{ width: 24, height: 24 }} />}
       </View>
     </TouchableOpacity>

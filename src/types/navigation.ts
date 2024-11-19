@@ -76,6 +76,8 @@ export type MoreScreens = {
 	UpdateProfile: undefined;
 	UpdatePassword: undefined;
 	AddIdentifier: undefined;
+	TermCondition: undefined;
+	PrivacyPolicy: undefined;
 }
 export type PartnerMoreScreens = {
 	Bottom: undefined;

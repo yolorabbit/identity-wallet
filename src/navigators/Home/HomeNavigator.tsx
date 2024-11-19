@@ -16,6 +16,8 @@ import UpdateProfile from '../../screens/customer/profile/UpdateProfile';
 import UpdatePassword from '../../screens/customer/profile/UpdatePassword';
 import AddIdentifier from '../../screens/customer/identity/AddIdentifier';
 import PartnerBottomNavigater from '../PartnerBottomTab/PartnerBottomTabNavigator';
+import TermCondition from '../../screens/customer/support/TermCondition';
+import PrivacyPolicy from '../../screens/customer/support/PrivacyPolicy';
 
 const HomeStack = createStackNavigator<MoreScreens>();
 
@@ -41,6 +43,8 @@ const HomeNavigator = () => {
       <HomeStack.Screen name="UpdatePassword" component={UpdatePassword} />
       <HomeStack.Screen name="PartnerBottom" component={PartnerBottomNavigater} />
       <HomeStack.Screen name='AddIdentifier' component={AddIdentifier} />
+      <HomeStack.Screen name='TermCondition' component={TermCondition} />
+      <HomeStack.Screen name='PrivacyPolicy' component={PrivacyPolicy} />
     </HomeStack.Navigator>
   );
 }

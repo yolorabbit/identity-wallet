@@ -20,6 +20,14 @@ const UserProfile: FC<any> = ({ navigation }): React.JSX.Element => {
 
   const fullName = `${user.first_name} ${user.last_name}`;
 
+  const handleGotoTermPrivacy = () => {
+    navigation.navigate('TermCondition');
+  }
+
+  const handleGotoPrivacyPolicy = () => {
+    navigation.navigate('PrivacyPolicy');
+  }
+
   return (
     <CommonScreen>
       <View style={styles.container}>
@@ -35,7 +43,7 @@ const UserProfile: FC<any> = ({ navigation }): React.JSX.Element => {
           <View style={{ marginHorizontal: 16 }}>
             <View style={styles.profileInfoContainer}>
               <View style={styles.imageContainer}>
-                <CustomText title={`${user.first_name[0]}${user.last_name[0]}`} size='h4' weight='semibold' color='white' />
+                <CustomText title={`${user.first_name != null ? user.first_name[0] : ""}${user.last_name != null ? user.last_name[0] : ""}`} size='h4' weight='semibold' color='white' />
               </View>
               <View style={styles.infoTextContainer}>
                 <CustomText title={fullName} size='bodyLarge' weight='bold' color='textPrimary' />
@@ -91,7 +99,7 @@ const UserProfile: FC<any> = ({ navigation }): React.JSX.Element => {
                 color='textPrimary'
                 prefix={ICONS.assignmentFillIcon}
                 suffix={ICONS.chevronRightIcon}
-                onPress={() => null}
+                onPress={() => handleGotoTermPrivacy()}
               />
               <View style={styles.separator} />
               <CommonBtnAnother
@@ -101,7 +109,7 @@ const UserProfile: FC<any> = ({ navigation }): React.JSX.Element => {
                 color='textPrimary'
                 prefix={ICONS.descriptionFillIcon}
                 suffix={ICONS.chevronRightIcon}
-                onPress={() => null}
+                onPress={() => handleGotoPrivacyPolicy()}
               />
               {/* <View style={styles.separator} /> */}
               {/* <CommonBtnAnother
@@ -148,6 +156,7 @@ const UserProfile: FC<any> = ({ navigation }): React.JSX.Element => {
     </CommonScreen>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

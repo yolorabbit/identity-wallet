@@ -5,19 +5,21 @@ import CommonHeader from '../../components/Headers/CommonHeader';
 import { CommonBtn, CommonInput, CustomText } from '../../components/common';
 import { ICONS, THEME } from '../../constants';
 import { TYPES } from '../../types';
-import { validateEmailAddress, validateMobilePhoneNumber, validateName } from '../../utils/authValidation';
+import { validateEightNumber, validateEmailAddress } from '../../utils/authValidation';
 import userAppData from '../../hooks/userAppData';
 import { fetchUser } from '../../constants/functions';
 import { IUser } from '../../types/type';
 
 const Login: FC<any> = ({ navigation }): React.JSX.Element => {
   const { user } = userAppData() as { user: IUser };
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [userinfo, setUserInfo] = useState<TYPES.ISignUp>({} as TYPES.ISignUp);
   const [errors, setErrors] = useState<TYPES.ISignUp>({} as TYPES.ISignUp);
 
   const onNext = async () => {
     setErrors((info: any) => ({ ...info, email: "" }));
     setErrors((info: any) => ({ ...info, password: "" }));
+    setLoading(true);
     const data = await fetchUser(userinfo.email);
     if (data) {
       if (data.password == userinfo.password) {
@@ -35,25 +37,11 @@ const Login: FC<any> = ({ navigation }): React.JSX.Element => {
     } else {
       setErrors((info: any) => ({ ...info, email: "Email Incorrect!" }))
     }
+    setLoading(false);
   }
   const handleChangeInfo = (field: string, value: string) => {
     setUserInfo(v => ({ ...v, [field]: value }));
-
     switch (field) {
-      case 'email':
-        if (!validateName(value)) {
-          setErrors((info: any) => ({ ...info, firstName: "First Name is invalid" }))
-        } else {
-          setErrors((info: any) => ({ ...info, firstName: "" }))
-        }
-        break;
-      case 'lastName':
-        if (!validateName(value)) {
-          setErrors((info: any) => ({ ...info, lastName: "Last Name is invalid" }))
-        } else {
-          setErrors((info: any) => ({ ...info, lastName: "" }))
-        }
-        break;
       case 'email':
         if (!validateEmailAddress(value)) {
           setErrors((info: any) => ({ ...info, email: "Email is invalid" }))
@@ -61,14 +49,13 @@ const Login: FC<any> = ({ navigation }): React.JSX.Element => {
           setErrors((info: any) => ({ ...info, email: "" }))
         }
         break;
-      case 'mobileNumber':
-        if (!validateMobilePhoneNumber(value)) {
-          setErrors((info: any) => ({ ...info, mobileNumber: "Mobile Phone Number must be 12 characters" }))
+      case 'password':
+        if (!validateEightNumber(value)) {
+          setErrors((info: any) => ({ ...info, password: "Password is invalid" }))
         } else {
-          setErrors((info: any) => ({ ...info, mobileNumber: "" }))
+          setErrors((info: any) => ({ ...info, password: "" }))
         }
         break;
-
       default:
         break;
     }
@@ -158,7 +145,8 @@ const Login: FC<any> = ({ navigation }): React.JSX.Element => {
                 </View>
                 <CommonBtn
                   title='Login'
-                  kind='primary'
+                  isLoading = {isLoading}
+                  kind= "primary"
                   onPress={() => onNext()}
                 />
                 {/* Create Account Text */}

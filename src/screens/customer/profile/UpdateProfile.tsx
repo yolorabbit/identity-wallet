@@ -75,7 +75,7 @@ const UpdateProfile: FC<MoreScreenProps> = ({ route, navigation }: any): React.J
         break;
       case 'mobileNumber':
         if (!validateMobilePhoneNumber(value)) {
-          setErrors((info: any) => ({ ...info, mobileNumber: "Mobile Phone Number must be 12 characters" }))
+          setErrors((info: any) => ({ ...info, mobileNumber: "Mobile Phone Number must contain at least 8 digits" }))
         } else {
           setErrors((info: any) => ({ ...info, mobileNumber: "" }))
         }
